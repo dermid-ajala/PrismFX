@@ -7,7 +7,9 @@
 #include "font3_9x15.h"
 
 #include "image1.h"	// default: RYW logo 240x240 - but may be changed by users
-#include "image2.h"	// default: flowers 240x240
+#include "image2.h"	// default: watch 240x240
+#include "image3.h"	// default: RYW logo 120x120
+#include "image4.h"	// default: KidBright Monkey
 
 // 26 is out OUT1, 27 is OUT2, 0 is default
 #define CS_PIN	GPIO_NUM_0
@@ -681,12 +683,18 @@ void PRISMFX::plotPoint(double v1, double v2, double v3){	// new data point
 }
 
 void PRISMFX::drawImage(uint16_t x, uint16_t y, uint8_t imageID){
-	int width  = imageID==2 ? img2_width  : img1_width;
-	int height = imageID==2 ? img2_height : img1_height;
+	int width, height;
+	const uint8_t *addr;
+	switch(imageID){
+		case 1:	width=img1_width;	height=img1_height;	addr=(uint8_t *)img1;	break;
+		case 2:	width=img2_width;	height=img2_height;	addr=(uint8_t *)img2;	break;
+		case 3:	width=img3_width;	height=img3_height;	addr=(uint8_t *)img3;	break;
+		case 4:	width=img4_width;	height=img4_height;	addr=(uint8_t *)img4;	break;
+		default:	return;	// shouldn't be possible
+	}
 //	printf("in drawImage, imageID=%d,  w=%d, h=%d\n", imageID, width, height);
 	if(x + width > 240)		return;	// image won't fit
 	if(y + height > 240)	return;	// image wor't fit
-	const uint8_t *addr = imageID==2 ?  (uint8_t *)img2 :  (uint8_t *)img1;
 	uint8_t *p, *limit, bufr[BUFFER_SIZE];
 	p = limit = (uint8_t *)addr;
 	limit += width * height * 2 - BUFFER_SIZE;

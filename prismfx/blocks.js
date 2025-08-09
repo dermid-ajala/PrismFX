@@ -238,7 +238,9 @@ Blockly.Blocks['prismfx.image'] = {
 	  this.appendValueInput("Y").setCheck("Number").appendField(Blockly.Msg.PRISMFX_Y);
       this.appendDummyInput().appendField(Blockly.Msg.PRISMFX_IMAGE_ID).appendField(new Blockly.FieldDropdown([	// <-- name displayed in block
 				["image1", "1"],
-				["image2", "2"]]), "img");	// << name for generator
+				["image2", "2"],
+				["image3", "3"],
+				["image4", "4"]]), "img");	// << name for generator
 	  this.setInputsInline(true);
 	  this.setPreviousStatement(true, null);
 	  this.setNextStatement(true, null);
